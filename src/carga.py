@@ -124,7 +124,7 @@ def cargar_periodos(spark: SparkSession, periodos: list, reutilizar: bool = True
     dfs = {}
     for periodo in periodos:
         destino = ruta_tipado(periodo)
-        if not (reutilizar and destino.exists()):
+        if not (reutilizar and (destino / "_SUCCESS").exists()):
             guardar_tipado(cargar_archivo(spark, periodo), periodo)
             shutil.rmtree(DIR_TIPADO / "_tmp", ignore_errors=True)
         dfs[periodo] = spark.read.parquet(str(destino))
