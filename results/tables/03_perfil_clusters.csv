@@ -1,0 +1,5 @@
+,nombre,registros,porcentaje,edad_mediana,antiguedad_mediana,horas_mediana,salario_p25,salario_mediano,salario_p75,salario_medio,categoria_predominante,educacion_predominante,dominio_predominante
+0,Mayores,12742,24.03,46.0,3.0,42.0,1500.0,3000.0,4000.0,3536.696515460681,Empresa privada (46 %),código 2 (36 %),código 1 (47 %)
+1,Jornada larga,8928,16.84,29.0,2.0,72.0,2000.0,3000.0,3900.0,3240.8707437275984,Empresa privada (67 %),código 4 (34 %),código 2 (43 %)
+2,Jóvenes,24488,46.18,26.0,1.25,44.0,1600.0,3000.0,3900.0,3074.7418327344003,Empresa privada (57 %),código 4 (38 %),código 1 (41 %)
+3,"Mayores, antigüedad alta",6867,12.95,48.0,20.0,40.0,2250.0,3800.0,6000.0,4680.565894859473,Empresa privada (40 %),código 2 (28 %),código 1 (44 %)
