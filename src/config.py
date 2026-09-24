@@ -22,7 +22,15 @@ PERIODOS = {
     "2025T4": (2025, 4),
     "2026T1": (2026, 1),
 }
-PERIODOS_TRAIN = ["2025T1", "2025T2", "2025T3", "2025T4"]
+# Nombre del xlsx de Personas de cada periodo dentro de data/raw
+ARCHIVOS = {
+    "2025T1": "ENEIC_2025T1.xlsx",
+    "2025T2": "ENEIC_2025T2.xlsx",
+    "2025T3": "ENEIC_2025T3.xlsx",
+    "2025T4": "ENEIC_2025T4.xlsx",
+    "2026T1": "ENEIC_2026T1.xlsx",
+}
+PERIODOS_TRAIN =["2025T1", "2025T2", "2025T3", "2025T4"]
 PERIODO_TEST = "2026T1"
 
 # Columnas originales que se seleccionan de cada archivo
@@ -48,6 +56,25 @@ RENOMBRES = {
 CATEGORICAS = ["nivel_educativo", "categoria_ocupacional", "dominio"]
 NUMERICAS = ["edad", "antiguedad", "horas_semanales"]
 CATEGORIAS_ASALARIADO = [1, 2, 3, 4]
+
+# Codigos validos segun el diccionario de datos (el codigo educativo 0 es "ninguno").
+CODIGOS_VALIDOS = {
+    "nivel_educativo": [str(i) for i in range(0, 10)],
+    "categoria_ocupacional": [str(c) for c in CATEGORIAS_ASALARIADO],
+    "dominio": [str(i) for i in range(1, 4)],
+}
+DESCONOCIDO = "DESCONOCIDO"
+
+EDAD_MINIMA = 15
+HORAS_MAXIMAS = 168
+
+COLUMNAS_PREPARADAS = [
+    "periodo_archivo", "anio_archivo", "trimestre_calendario", "archivo_origen",
+    "NUM_HOGAR", "NUM_PERSONA", "FACTOR", "ANIO", "TRIMESTRE",
+    "salario_mensual", "edad", "antiguedad", "horas_semanales",
+    "nivel_educativo", "categoria_ocupacional", "dominio",
+]
+CLAVE = ["periodo_archivo", "NUM_HOGAR", "NUM_PERSONA"]
 
 
 def crear_spark(nombre: str = "lab7"):
