@@ -1,0 +1,29 @@
+# Datos crudos y procesados
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Modelos guardados
+results/modelos/*
+!results/modelos/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Entornos virtuales
+venv/
+.venv/
+
+# Spark
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Sistema
+.DS_Store
+Thumbs.db
+

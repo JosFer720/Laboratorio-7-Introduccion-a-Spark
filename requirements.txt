@@ -1,0 +1,10 @@
+pyspark==3.5.*
+pandas
+numpy
+openpyxl
+pyarrow
+matplotlib
+seaborn
+jupyter
+notebook
+pytest
