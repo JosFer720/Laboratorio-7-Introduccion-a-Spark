@@ -51,9 +51,8 @@ Los notebooks se ejecutan de principio a fin sin variables previas. La semilla g
 | Seccion | Estado |
 |---|---|
 | Carga, armonizacion y calidad | implementada (src/carga.py, src/calidad.py, notebook 01) |
-| Estadistica descriptiva | pendiente |
-| Correlaciones | pendiente |
-| Segmentacion KMeans | pendiente |
+| Estadistica descriptiva | implementada (src/exploracion.py, notebook 02) |
+| Correlaciones | implementada (src/exploracion.py, notebook 02) |
+| Segmentacion KMeans | implementada (src/segmentacion.py, notebook 03) |
+| Notebook consolidado | notebooks/Laboratorio_7_Spark_MLlib.ipynb (secciones 1 a 4) |
 | Regresion lineal, Random Forest, evaluacion 2026 y errores | pendiente |
-
-
