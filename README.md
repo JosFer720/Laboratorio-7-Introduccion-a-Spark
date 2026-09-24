@@ -50,7 +50,7 @@ Los notebooks se ejecutan de principio a fin sin variables previas. La semilla g
 
 | Seccion | Estado |
 |---|---|
-| Carga, armonizacion y calidad | pendiente |
+| Carga, armonizacion y calidad | implementada (src/carga.py, src/calidad.py, notebook 01) |
 | Estadistica descriptiva | pendiente |
 | Correlaciones | pendiente |
 | Segmentacion KMeans | pendiente |
