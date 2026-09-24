@@ -55,3 +55,5 @@ Los notebooks se ejecutan de principio a fin sin variables previas. La semilla g
 | Correlaciones | pendiente |
 | Segmentacion KMeans | pendiente |
 | Regresion lineal, Random Forest, evaluacion 2026 y errores | pendiente |
+
+
