@@ -30,10 +30,10 @@ Las categorías que no aparecen en entrenamiento reciben una columna propia (sie
 | Configuración | `regParam` | `elasticNetParam` |
 |---|---|---|
 | `sin_regularizacion` | 0.0 | 0.0 |
-| `ridge_0.01` | 0.01 | 0.0 |
 | `ridge_0.1` | 0.1 | 0.0 |
-| `lasso_0.01` | 0.01 | 1.0 |
-| `elasticnet_0.01_0.5` | 0.01 | 0.5 |
+| `ridge_1.0` | 1.0 | 0.0 |
+| `lasso_0.1` | 0.1 | 1.0 |
+| `elasticnet_0.1_0.5` | 0.1 | 0.5 |
 
 Cada una se ajusta solo con entrenamiento y se elige la de **menor RMSE de validación**.
 
