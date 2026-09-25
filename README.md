@@ -15,7 +15,7 @@ data/processed/    parquet preparado de 2025 y 2026
 informe/secciones/ secciones del informe
 notebooks/         notebooks del laboratorio
 results/           figuras, tablas y modelos
-src/               modulos de carga, calidad, exploracion y segmentacion
+src/               modulos de carga, calidad, exploracion, segmentacion y modelado
 tests/             pruebas con pytest
 codebook.md        diccionario de las variables utilizadas
 ```
@@ -24,6 +24,7 @@ codebook.md        diccionario de las variables utilizadas
 
 - Python 3.10+ y Spark 3.5.x (`pyspark==3.5.*`).
 - Java 8, 11, 17 o 21 disponible en el `PATH`.
+- En Windows, guardar y cargar modelos de Spark requiere `winutils` (`HADOOP_HOME`); en Linux o en el docker del curso no hace falta.
 
 ```bash
 pip install -r requirements.txt
@@ -55,4 +56,5 @@ Los notebooks se ejecutan de principio a fin sin variables previas. La semilla g
 | Correlaciones | implementada (src/exploracion.py, notebook 02) |
 | Segmentacion KMeans | implementada (src/segmentacion.py, notebook 03) |
 | Notebook consolidado | notebooks/Laboratorio_7_Spark_MLlib.ipynb (secciones 1 a 4) |
-| Regresion lineal, Random Forest, evaluacion 2026 y errores | pendiente |
+| Regresion lineal | implementada (src/modelado.py, src/regresion_lineal.py, notebook 05) |
+| Random Forest, evaluacion 2026 y errores | pendiente |
