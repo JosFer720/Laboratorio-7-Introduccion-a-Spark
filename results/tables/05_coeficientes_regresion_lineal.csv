@@ -1,0 +1,23 @@
+variable,coeficiente
+(intercepto),1775.5036454031044
+nivel_educativo=7,8702.197452985993
+nivel_educativo=6,6863.059313238478
+nivel_educativo=5,1776.8862968276644
+categoria_ocupacional=1,1424.309501166388
+categoria_ocupacional=4,-1413.8573091962028
+nivel_educativo=0,-1250.9019458777063
+nivel_educativo=1,-966.574738338724
+nivel_educativo=2,-753.933634331135
+categoria_ocupacional=3,-607.7684539273366
+nivel_educativo=3,-548.7231110953137
+dominio=1,349.2595402099689
+categoria_ocupacional=2,250.70763850112016
+dominio=3,-218.74813407974491
+dominio=2,-209.29890944839048
+nivel_educativo=4,82.49425746214521
+antiguedad,23.37081083284157
+edad,20.427558905581755
+horas_semanales,16.167210333442533
+nivel_educativo=<no vista>,0.0
+categoria_ocupacional=<no vista>,0.0
+dominio=<no vista>,0.0
