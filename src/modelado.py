@@ -1,6 +1,8 @@
 """Base del modelado supervisado: conjuntos, modelo de referencia y metricas de regresion."""
 import pandas as pd
+from pyspark.ml import PipelineModel
 from pyspark.ml.evaluation import RegressionEvaluator
+from pyspark.ml.feature import OneHotEncoder, StringIndexer, StringIndexerModel, VectorAssembler
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 
@@ -74,3 +76,44 @@ def tabla_metricas(filas: dict) -> pd.DataFrame:
     tabla = pd.DataFrame(filas).T
     tabla.index.name = "modelo"
     return tabla.reset_index()
+
+
+def etapas_preprocesamiento() -> list:
+    """StringIndexer + OneHotEncoder de las categoricas y VectorAssembler con las numericas.
+
+    `handleInvalid="keep"` manda categorias nunca vistas en entrenamiento a un indice extra; el
+    OneHotEncoder le da su propia columna (siempre en cero al ajustar), para que validacion y prueba
+    no fallen. Cada categoria observada tiene su columna, sin nivel de referencia.
+    """
+    indexadores = [StringIndexer(inputCol=c, outputCol=f"{c}_idx", handleInvalid="keep")
+                   for c in config.CATEGORICAS]
+    codificador = OneHotEncoder(inputCols=[f"{c}_idx" for c in config.CATEGORICAS],
+                                outputCols=[f"{c}_ohe" for c in config.CATEGORICAS],
+                                handleInvalid="keep", dropLast=True)
+    ensamblador = VectorAssembler(
+        inputCols=config.NUMERICAS + [f"{c}_ohe" for c in config.CATEGORICAS],
+        outputCol="features", handleInvalid="error")
+    return indexadores + [codificador, ensamblador]
+
+
+def nombres_features(modelo) -> list:
+    """Nombre de cada posicion del vector `features` de un PipelineModel ajustado."""
+    nombres = list(config.NUMERICAS)
+    for etapa in modelo.stages:
+        if isinstance(etapa, StringIndexerModel):
+            categoria = etapa.getInputCol()
+            nombres += [f"{categoria}={valor}" for valor in etapa.labelsArray[0]]
+            nombres.append(f"{categoria}=<no vista>")
+    return nombres
+
+
+def guardar_modelo(modelo, nombre: str):
+    """Guarda un PipelineModel en results/modelos/<nombre>."""
+    destino = config.MODELOS / nombre
+    modelo.write().overwrite().save(str(destino))
+    return destino
+
+
+def cargar_modelo(nombre: str):
+    """Carga un PipelineModel guardado con `guardar_modelo`."""
+    return PipelineModel.load(str(config.MODELOS / nombre))
