@@ -1,0 +1,22 @@
+variable,importancia
+nivel_educativo=6,0.1565431348683732
+horas_semanales,0.12350416118358848
+edad,0.12219466915666738
+nivel_educativo=5,0.11481498491767006
+antiguedad,0.10999241760484507
+categoria_ocupacional=1,0.0989337668315302
+categoria_ocupacional=2,0.06517427468971122
+categoria_ocupacional=3,0.06390308446279479
+categoria_ocupacional=4,0.031480001996684
+dominio=1,0.028930736833205368
+nivel_educativo=7,0.022709631137953816
+nivel_educativo=4,0.02043685499915624
+nivel_educativo=2,0.016379312822688986
+dominio=2,0.0082345954436808
+nivel_educativo=0,0.006079409956404795
+nivel_educativo=3,0.005384061997069855
+dominio=3,0.004716801019101822
+nivel_educativo=1,0.0005881000788740927
+nivel_educativo=<no vista>,0.0
+categoria_ocupacional=<no vista>,0.0
+dominio=<no vista>,0.0
