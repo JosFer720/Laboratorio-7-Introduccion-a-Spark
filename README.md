@@ -57,4 +57,5 @@ Los notebooks se ejecutan de principio a fin sin variables previas. La semilla g
 | Segmentacion KMeans | implementada (src/segmentacion.py, notebook 03) |
 | Notebook consolidado | notebooks/Laboratorio_7_Spark_MLlib.ipynb (secciones 1 a 4) |
 | Regresion lineal | implementada (src/modelado.py, src/regresion_lineal.py, notebook 05) |
-| Random Forest, evaluacion 2026 y errores | pendiente |
+| Random Forest | implementada (src/random_forest.py, notebook 06) |
+| Evaluacion 2026 y analisis de errores | pendiente |
