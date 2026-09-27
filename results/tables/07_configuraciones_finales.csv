@@ -1,0 +1,3 @@
+algoritmo,configuracion,hiperparametros,rmse_validacion
+regresión lineal,sin_regularizacion,"regParam = 0.0, elasticNetParam = 0.0",2186.419578668228
+random forest,arboles_100_prof_20,"numTrees = 100, maxDepth = 20, seed = 42",1892.525906786688
