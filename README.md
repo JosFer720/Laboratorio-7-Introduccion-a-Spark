@@ -56,8 +56,8 @@ Los notebooks se ejecutan de principio a fin sin variables previas. La semilla g
 | Estadistica descriptiva | implementada (src/exploracion.py, notebook 02) |
 | Correlaciones | implementada (src/exploracion.py, notebook 02) |
 | Segmentacion KMeans | implementada (src/segmentacion.py, notebook 03) |
-| Notebook consolidado | notebooks/Laboratorio_7_Spark_MLlib.ipynb (actividades 1 a 8 y discusion final) |
 | Regresion lineal | implementada (src/modelado.py, src/regresion_lineal.py, notebook 05) |
 | Random Forest | implementada (src/random_forest.py, notebook 06) |
 | Evaluacion final en 2026 | implementada (src/evaluacion.py, notebook 07) |
 | Analisis de errores y discusion final | implementada (src/evaluacion.py, notebook 08) |
+| **Notebook de entrega** | notebooks/Laboratorio_7_Spark_MLlib.ipynb (actividades 1 a 8 y discusion final) |
