@@ -57,9 +57,10 @@ CATEGORICAS = ["nivel_educativo", "categoria_ocupacional", "dominio"]
 NUMERICAS = ["edad", "antiguedad", "horas_semanales"]
 CATEGORIAS_ASALARIADO = [1, 2, 3, 4]
 
-# Codigos validos segun el diccionario de datos (el codigo educativo 0 es "ninguno").
+# Codigos validos segun el diccionario de datos de Personas (2025 y 2026): educacion 0 ninguno
+# a 7 doctorado (el 0 es "ninguno", no un faltante).
 CODIGOS_VALIDOS = {
-    "nivel_educativo": [str(i) for i in range(0, 10)],
+    "nivel_educativo": [str(i) for i in range(0, 8)],
     "categoria_ocupacional": [str(c) for c in CATEGORIAS_ASALARIADO],
     "dominio": [str(i) for i in range(1, 4)],
 }

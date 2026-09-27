@@ -56,13 +56,16 @@ def test_preparar_devuelve_columnas_finales_y_antiguedad(spark, tmp_path):
 
 
 def test_categoricas_desconocidas(spark, tmp_path):
-    filas = [_fila(1, P03A03A=None), _fila(2, P03A03A="77"), _fila(3, DOMINIO="9"), _fila(4)]
+    filas = [_fila(1, P03A03A=None), _fila(2, P03A03A="77"), _fila(3, DOMINIO="9"), _fila(4),
+             _fila(5, P03A03A="8"), _fila(6, P03A03A="7")]
     df = calidad.preparar(_df(spark, tmp_path, filas)).orderBy("NUM_HOGAR")
     valores = {r["NUM_HOGAR"]: (r["nivel_educativo"], r["dominio"]) for r in df.collect()}
     assert valores["1"] == (config.DESCONOCIDO, "1")
     assert valores["2"] == (config.DESCONOCIDO, "1")
     assert valores["3"] == ("0", config.DESCONOCIDO)
     assert valores["4"] == ("0", "1")
+    assert valores["5"] == (config.DESCONOCIDO, "1")  # el diccionario llega hasta 7 (doctorado)
+    assert valores["6"] == ("7", "1")
 
 
 def test_faltantes(spark, tmp_path):
