@@ -71,3 +71,15 @@ Exactamente seis: `edad`, `antiguedad`, `horas_semanales`, `nivel_educativo`, `c
 ## Clave de unicidad
 
 `periodo_archivo` + `NUM_HOGAR` + `NUM_PERSONA`. Una misma persona puede aparecer en periodos distintos (diseño longitudinal con rotación); eso no es un duplicado.
+
+## Columnas de la evaluación final (`src/evaluacion.py`)
+
+Se generan en memoria sobre 2026 I; no se guardan en `data/processed/`.
+
+| Columna | Definición |
+|---|---|
+| `pred_referencia` | Salario medio de 2025 (constante), modelo de referencia. |
+| `pred_regresion_lineal`, `pred_random_forest` | Salario predicho por cada pipeline final, reentrenado con los cuatro trimestres de 2025. |
+| `residuo_regresion_lineal`, `residuo_random_forest` | `salario_mensual − predicción`. Positivo = subestimación; negativo = sobreestimación. |
+
+Etiquetas del diccionario usadas en las tablas por grupo: nivel educativo 0 ninguno, 1 preprimaria, 2 primaria, 3 básico, 4 diversificado, 5 superior, 6 maestría, 7 doctorado; dominio 1 urbano metropolitano, 2 resto urbano, 3 rural nacional.

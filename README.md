@@ -24,13 +24,14 @@ codebook.md        diccionario de las variables utilizadas
 
 - Python 3.10+ y Spark 3.5.x (`pyspark==3.5.*`).
 - Java 8, 11, 17 o 21 disponible en el `PATH`.
-- En Windows, guardar y cargar modelos de Spark requiere `winutils` (`HADOOP_HOME`); en Linux o en el docker del curso no hace falta.
+- En Windows, guardar y cargar modelos de Spark requiere `winutils` (`HADOOP_HOME`); en Linux, WSL o el docker del curso no hace falta.
+- Con Python 3.12, `pyspark.ml` 3.5 necesita `setuptools` (provee `distutils`); ya esta en `requirements.txt`.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Colocar los xlsx de Personas en `data/raw/` con los nombres indicados en `src/carga.py` (`ARCHIVOS`).
+Colocar los xlsx de Personas en `data/raw/` con los nombres indicados en `src/config.py` (`ARCHIVOS`). Se descargan de la pagina de la ENEIC del INE (https://www.ine.gob.gt/encuesta-nacional-de-empleo-e-ingresos/): "Base de datos Personas" de I, II, III y IV de 2025 y de I de 2026.
 
 ## Ejecucion
 
@@ -55,7 +56,8 @@ Los notebooks se ejecutan de principio a fin sin variables previas. La semilla g
 | Estadistica descriptiva | implementada (src/exploracion.py, notebook 02) |
 | Correlaciones | implementada (src/exploracion.py, notebook 02) |
 | Segmentacion KMeans | implementada (src/segmentacion.py, notebook 03) |
-| Notebook consolidado | notebooks/Laboratorio_7_Spark_MLlib.ipynb (secciones 1 a 4) |
+| Notebook consolidado | notebooks/Laboratorio_7_Spark_MLlib.ipynb (actividades 1 a 8 y discusion final) |
 | Regresion lineal | implementada (src/modelado.py, src/regresion_lineal.py, notebook 05) |
 | Random Forest | implementada (src/random_forest.py, notebook 06) |
-| Evaluacion 2026 y analisis de errores | pendiente |
+| Evaluacion final en 2026 | implementada (src/evaluacion.py, notebook 07) |
+| Analisis de errores y discusion final | implementada (src/evaluacion.py, notebook 08) |
