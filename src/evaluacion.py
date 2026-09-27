@@ -1,5 +1,6 @@
 """Entrenamiento final con 2025, evaluacion en 2026 (act. 7) y analisis de errores (act. 8)."""
 import pandas as pd
+from pyspark.ml.feature import Bucketizer
 from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
@@ -135,6 +136,50 @@ def rango_predicciones(pred: DataFrame) -> pd.DataFrame:
         filas[nombre] = {"minimo": minimo, "p1": p1, "p99": p99, "maximo": maximo,
                          "negativos": pred.filter(F.col(col) < 0).count()}
     return pd.DataFrame(filas).T
+
+
+def error_por_decil_prediccion(pred: DataFrame, modelo: str, grupos: int = 10) -> pd.DataFrame:
+    """n, prediccion media, salario real medio, MAE y error medio por decil de lo predicho por `modelo`."""
+    columna = PREDICCIONES[modelo]
+    cortes = sorted(set(pred.approxQuantile(columna, [i / grupos for i in range(1, grupos)], 0.001)))
+    decil = Bucketizer(splits=[float("-inf")] + cortes + [float("inf")], inputCol=columna, outputCol="decil")
+    return (decil.transform(pred).groupBy("decil")
+            .agg(F.count("*").alias("n"), F.avg(columna).alias("prediccion_media"),
+                 F.avg(modelado.OBJETIVO).alias("salario_real_medio"),
+                 F.avg(F.abs(RESIDUOS[modelo])).alias("mae"), F.avg(RESIDUOS[modelo]).alias("error_medio"))
+            .orderBy("decil").toPandas())
+
+
+def resumen_errores(pred: DataFrame, umbral_alto: float, umbral_cola: float,
+                    tolerancia: float = 0.2) -> pd.DataFrame:
+    """Tamano y signo de los errores de cada modelo, con todos los registros de `pred`.
+
+    - mediana del error absoluto y % de registros con error menor o igual a `tolerancia` del salario real;
+    - % subestimados (residuo > 0) en total y entre los salarios reales mayores que `umbral_alto`;
+    - % de la suma de errores cuadraticos que aportan los salarios reales mayores que `umbral_cola`.
+    """
+    real = F.col(modelado.OBJETIVO)
+    filas = {}
+    for m in MODELOS:
+        residuo = F.col(RESIDUOS[m])
+        fila = pred.agg(
+            F.avg((F.abs(residuo) <= tolerancia * real).cast("double")).alias("dentro"),
+            F.avg((residuo > 0).cast("double")).alias("sub_total"),
+            F.avg(F.when(real > umbral_alto, (residuo > 0).cast("double"))).alias("sub_alto"),
+            F.sum(residuo * residuo).alias("sse"),
+            F.sum(F.when(real > umbral_cola, residuo * residuo)).alias("sse_cola"),
+        ).first()
+        mediana = pred.select(F.abs(residuo).alias("a")).approxQuantile("a", [0.5], 0.001)[0]
+        filas[NOMBRES[m]] = {
+            "mediana_error_absoluto": mediana,
+            f"pct_error_hasta_{round(100 * tolerancia)}pct": 100 * fila["dentro"],
+            "pct_subestimados": 100 * fila["sub_total"],
+            "pct_subestimados_salario_alto": 100 * fila["sub_alto"],
+            "pct_error_cuadratico_cola": 100 * (fila["sse_cola"] or 0.0) / fila["sse"],
+        }
+    tabla = pd.DataFrame(filas).T
+    tabla.index.name = "modelo"
+    return tabla.reset_index()
 
 
 def error_por_tramo(pred: DataFrame, cortes: list) -> pd.DataFrame:

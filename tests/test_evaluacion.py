@@ -144,6 +144,36 @@ def test_percentiles_y_rango(spark, tmp_path, predicciones):
     assert (rango["minimo"] <= rango["maximo"]).all()
 
 
+def _pred_conocida(spark, tmp_path, reales, predichos):
+    filas = [("2026T1", str(i), "1", float(r), 30.0, 1.0, 40.0, "1", "2", "1") for i, r in enumerate(reales)]
+    pred = a_spark(spark, filas, tmp_path)
+    for m in evaluacion.MODELOS:
+        valores = F.create_map(*[x for i, p in enumerate(predichos) for x in (F.lit(str(i)), F.lit(float(p)))])
+        pred = (pred.withColumn(evaluacion.PREDICCIONES[m], valores[F.col("NUM_HOGAR")])
+                .withColumn(evaluacion.RESIDUOS[m], F.col(modelado.OBJETIVO) - F.col(evaluacion.PREDICCIONES[m])))
+    return pred
+
+
+def test_resumen_errores_con_valores_conocidos(spark, tmp_path):
+    # Residuos: -50, +10, 0, +600 (el ultimo es un salario alto subestimado).
+    pred = _pred_conocida(spark, tmp_path, [100, 200, 300, 1000], [150, 190, 300, 400])
+    tabla = evaluacion.resumen_errores(pred, umbral_alto=500, umbral_cola=500).set_index("modelo")
+    fila = tabla.loc["random forest"]
+    assert fila["pct_error_hasta_20pct"] == pytest.approx(50.0)  # 10/200 y 0/300
+    assert fila["pct_subestimados"] == pytest.approx(50.0)
+    assert fila["pct_subestimados_salario_alto"] == pytest.approx(100.0)
+    assert fila["pct_error_cuadratico_cola"] == pytest.approx(100 * 360000 / (2500 + 100 + 360000))
+
+
+def test_error_por_decil_prediccion(spark, tmp_path):
+    pred = _pred_conocida(spark, tmp_path, list(range(10, 210, 10)), list(range(10, 210, 10)))
+    tabla = evaluacion.error_por_decil_prediccion(pred, "regresion_lineal", grupos=4)
+    assert tabla["n"].sum() == 20
+    assert len(tabla) == 4
+    assert tabla["prediccion_media"].is_monotonic_increasing
+    assert tabla["error_medio"].tolist() == pytest.approx([0.0] * 4)
+
+
 def test_error_por_tramo_para_ambos_modelos(predicciones):
     cortes = evaluacion.cortes_tramos(predicciones, [0.5])
     tramos = evaluacion.error_por_tramo(predicciones, cortes)
